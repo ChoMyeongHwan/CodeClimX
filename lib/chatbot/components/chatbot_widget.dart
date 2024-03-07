@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:web_socket_channel/io.dart';
 import 'package:codeclimx/chatbot/pages/chatbot_page.dart';
 
 class ChatBotWidget extends StatelessWidget {
-  final IOWebSocketChannel channel;
-
-  const ChatBotWidget({super.key, required this.channel});
+  const ChatBotWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +10,7 @@ class ChatBotWidget extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => ChatbotPage(
-                  channel: channel)), // Pass the channel to the ChatbotPage
+          MaterialPageRoute(builder: (context) => const ChatbotPage()),
         );
       },
       backgroundColor: Colors.purple[400],
