@@ -36,8 +36,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: ChatBotWidget(channel: channel),
-      body: const Center(
+      floatingActionButton: ChatBotWidget(),
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
