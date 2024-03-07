@@ -1,5 +1,4 @@
 
-
 # See https://www.dartlang.org/guides/libraries/private-files
 
 # Files and directories created by pub
@@ -72,3 +71,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# FVM Version Cache
+.fvm/
