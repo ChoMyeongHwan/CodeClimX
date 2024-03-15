@@ -1,3 +1,5 @@
+Runner/GoogleService-Info.plist
+
 # Flutter-related
 **/Flutter/ephemeral/
 **/Pods/
@@ -6,6 +8,8 @@
 **/dgph
 **/xcuserdata/
 
+
 ios/Runner/GoogleService-Info.plist
 android/app/google-services.json
 macos/Runner/GoogleService-Info.plist
+

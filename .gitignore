@@ -1,6 +1,12 @@
 
 # See https://www.dartlang.org/guides/libraries/private-files
 
+# yhl
+**ios/Runner/GoogleService-Info.plist
+**android/app/google-services.json
+**macos/Runner/GoogleService-Info.plist
+
+
 # Files and directories created by pub
 .dart_tool/
 .packages
