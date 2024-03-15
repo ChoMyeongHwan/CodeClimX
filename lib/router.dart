@@ -2,6 +2,7 @@ import 'package:codeclimx/home/home_screen.dart';
 import 'package:codeclimx/videos/authentication/login_screen.dart';
 import 'package:codeclimx/videos/authentication/repos/authentication_repo.dart';
 import 'package:codeclimx/videos/authentication/sign_up_screen.dart';
+import 'package:codeclimx/videos/curriculum/roadmap_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -38,6 +39,11 @@ final routerProvider = Provider((ref) {
         name: HomeScreen.routeName,
         path: HomeScreen.routeURL,
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        name: RoadmapScreen.routeName,
+        path: RoadmapScreen.routeURL,
+        builder: (context, state) => const RoadmapScreen(),
       ),
     ],
   );

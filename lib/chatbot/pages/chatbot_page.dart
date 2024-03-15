@@ -27,7 +27,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
   void initState() {
     super.initState();
     channel = WebSocketChannel.connect(Uri.parse(
-        'ws://127.0.0.1:8000/chatbot')); // Connect to your WebSocket server
+        'ws://192.168.0.255:8001/chatbot')); // Connect to your WebSocket server
 
     _messageSubscription = channel.stream.listen((message) {
       if (mounted) {
@@ -129,7 +129,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
               itemCount: _messages.length,
             ),
           ),
-          Divider(height: 1.0),
+          const Divider(height: 1.0),
           Container(
             decoration: BoxDecoration(color: Theme.of(context).cardColor),
             child: _buildTextComposer(),
