@@ -1,4 +1,3 @@
-import 'package:codeclimx/videos/authentication/birthday_screen.dart';
 import 'package:codeclimx/videos/authentication/view_models/signup_view_model.dart';
 import 'package:codeclimx/videos/authentication/widgets/form_button.dart';
 import 'package:codeclimx/videos/constants/gaps.dart';
@@ -52,12 +51,13 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
       ...state,
       "password": _password,
     };
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const BirthdayScreen(),
-      ),
-    );
+    // ref.read(signUpProvider.notifier).signUp();
+    ref.read(signUpProvider.notifier).signUp(context);
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (context) => const HomeScreen(),
+    //   ),
+    // );
   }
 
   void _onClearTap() {

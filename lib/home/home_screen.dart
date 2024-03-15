@@ -25,6 +25,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         title: const Text('Home Screen'),
         actions: [
           IconButton(
+            icon: const Icon(Icons.featured_play_list), // 커리큘럼버튼
+            onPressed: () {
+              context.go("/roadmap");
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
               ref.read(authRepo).signOut();
