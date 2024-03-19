@@ -31,6 +31,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             },
           ),
           IconButton(
+            icon: const Icon(Icons.quiz_outlined), // 퀴즈
+            onPressed: () {
+              context.go("/quiz");
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
               ref.read(authRepo).signOut();

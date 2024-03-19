@@ -1,4 +1,5 @@
 import 'package:codeclimx/home/home_screen.dart';
+import 'package:codeclimx/quiz/screens/quiz_screen.dart';
 import 'package:codeclimx/videos/authentication/login_screen.dart';
 import 'package:codeclimx/videos/authentication/repos/authentication_repo.dart';
 import 'package:codeclimx/videos/authentication/sign_up_screen.dart';
@@ -44,6 +45,11 @@ final routerProvider = Provider((ref) {
         name: RoadmapScreen.routeName,
         path: RoadmapScreen.routeURL,
         builder: (context, state) => const RoadmapScreen(),
+      ),
+      GoRoute(
+        name: QuizScreen.routeName,
+        path: QuizScreen.routeURL,
+        builder: (context, state) => const QuizScreen(),
       ),
     ],
   );
