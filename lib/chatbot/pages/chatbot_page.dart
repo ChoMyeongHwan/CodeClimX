@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:codeclimx/chatbot/model/chat.dart';
+import 'package:codeclimx/chatbot/service/database.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:collection/collection.dart';
 
 class TypingIndicator extends StatefulWidget {
   final Color color;
@@ -154,10 +159,37 @@ class _ChatbotPageState extends State<ChatbotPage> {
         WebSocketChannel.connect(Uri.parse('ws://127.0.0.1:8000/chatbot'));
 
     _messageSubscription = channel.stream.listen((message) {
+      final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+      final String userId = _firebaseAuth.currentUser!.uid;
+
       if (mounted) {
         setState(() {
+          // Insert the received message at the start of the chat messages list.
           _messages.insert(0, ChatMessage(text: message, isSentByMe: false));
           _isAwaitingResponse = false;
+
+          // Add the sent and received messages to Firestore
+          // Assuming that the last message in _messages sent by the user is the one that corresponds to this received message
+          ChatMessage? lastSentMessage =
+              _messages.firstWhereOrNull((m) => m.isSentByMe && m.isMostRecent);
+          if (lastSentMessage != null) {
+            print(
+                'Adding chat message to the database with the following details:');
+            print('Sent Message: ${lastSentMessage.text}');
+            print('Received Message: $message');
+            DatabaseService().addChatMessage(
+                Chat(
+                    sentMessage: lastSentMessage.text, // Last sent message
+                    receivedMessage: message, // New received message
+                    sentTime: Timestamp
+                        .now(), // You might want to store the actual sent time
+                    receivedTime:
+                        Timestamp.now()), // The time the message was received
+                userId);
+
+            // Mark the message as no longer most recent after saving to Firestore
+            lastSentMessage.isMostRecent = false;
+          }
         });
       }
     });
