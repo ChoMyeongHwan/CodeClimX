@@ -25,7 +25,7 @@ class CustomBottomNavbar extends StatelessWidget {
             context.go('/quiz');
             break;
           case 3:
-            context.go('/home');
+            context.go('/community');
             break;
         }
       },

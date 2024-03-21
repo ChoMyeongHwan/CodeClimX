@@ -1,3 +1,4 @@
+import 'package:codeclimx/community/screens/community_screen.dart';
 import 'package:codeclimx/home/home_screen.dart';
 import 'package:codeclimx/quiz/screens/quiz_screen.dart';
 import 'package:codeclimx/videos/authentication/login_screen.dart';
@@ -50,6 +51,11 @@ final routerProvider = Provider((ref) {
         name: QuizScreen.routeName,
         path: QuizScreen.routeURL,
         builder: (context, state) => const QuizScreen(),
+      ),
+      GoRoute(
+        name: CommunityScreen.routeName,
+        path: CommunityScreen.routeURL,
+        builder: (context, state) => const CommunityScreen(),
       ),
     ],
   );
