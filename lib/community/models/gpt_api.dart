@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:io';
 import '../../utils/config.dart';
 
 Future<String> fetchChatGptResponse(String userInput, String docId) async {
-  String? apiKey = Config.communityApiKey;
+  String? apiKey = Config.apiKey;
   final uri = Uri.parse('https://api.openai.com/v1/chat/completions');
 
   final headers = {
