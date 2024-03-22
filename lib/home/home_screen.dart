@@ -64,8 +64,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: const ChatBotWidget(),
+      //floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      //floatingActionButton: const ChatBotWidget(),
       bottomNavigationBar:
           const CustomBottomNavbar(currentIndex: 0), // 현재 인덱스 수정
     );

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codeclimx/chatbot/model/chat.dart';
 import 'package:codeclimx/chatbot/service/database.dart';
+import 'package:codeclimx/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -139,6 +140,9 @@ class ChatMessage {
 }
 
 class ChatbotPage extends StatefulWidget {
+  static const String routeName = "chatbot";
+  static const String routeURL = "/chatbot";
+
   const ChatbotPage({super.key});
 
   @override
@@ -276,6 +280,15 @@ class _ChatbotPageState extends State<ChatbotPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chatbot'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+            );
+          },
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

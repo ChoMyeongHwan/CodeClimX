@@ -1,3 +1,4 @@
+import 'package:codeclimx/chatbot/screens/chatbot_screen.dart';
 import 'package:codeclimx/community/screens/community_screen.dart';
 import 'package:codeclimx/home/home_screen.dart';
 import 'package:codeclimx/quiz/screens/quiz_screen.dart';
@@ -56,6 +57,11 @@ final routerProvider = Provider((ref) {
         name: CommunityScreen.routeName,
         path: CommunityScreen.routeURL,
         builder: (context, state) => const CommunityScreen(),
+      ),
+      GoRoute(
+        name: ChatbotPage.routeName,
+        path: ChatbotPage.routeURL,
+        builder: (context, state) => const ChatbotPage(),
       ),
     ],
   );
