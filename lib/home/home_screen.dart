@@ -31,7 +31,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         title: SizedBox(
           height: kToolbarHeight, // AppBar의 높이를 맞춤
           child: Image.asset(
-            'assets/logo.jpg',
+            'assets/logo.png',
             fit: BoxFit.contain, // 이미지 비율을 유지하면서 공간을 최대로 채움
           ),
         ),
@@ -47,12 +47,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ],
         elevation: 0,
       ),
-      body: const Center(
+      body: SingleChildScrollView(
+        // 스크롤 가능한 화면을 위해 SingleChildScrollView를 사용
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min, // 내용의 크기에 맞게 Column을 조정
           children: [
-            Icon(Icons.question_mark, size: 50), // 아이콘 변경
-            Text('여기에 무엇을 넣으면 좋을까?') // 추가적인 위젯이나 콘텐츠를 여기에 배치
+            Container(
+              height: MediaQuery.of(context).size.height, // 화면의 높이를 채우도록 설정
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/home_image.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ],
         ),
       ),

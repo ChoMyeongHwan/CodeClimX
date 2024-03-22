@@ -59,26 +59,28 @@ class _LectureScreenState extends State<LectureScreen> {
   ) {
     return Scaffold(
       appBar: AppBar(title: Text(_videoTitle)),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          YoutubePlayer(
-            controller: _controller,
-            showVideoProgressIndicator: true,
-            onReady: () => debugPrint('Ready'),
-            bottomActions: [
-              CurrentPosition(),
-              ProgressBar(
-                isExpanded: true,
-                colors: const ProgressBarColors(
-                  playedColor: Colors.amber,
-                  handleColor: Colors.amberAccent,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            YoutubePlayer(
+              controller: _controller,
+              showVideoProgressIndicator: true,
+              onReady: () => debugPrint('Ready'),
+              bottomActions: [
+                CurrentPosition(),
+                ProgressBar(
+                  isExpanded: true,
+                  colors: const ProgressBarColors(
+                    playedColor: Colors.amber,
+                    handleColor: Colors.amberAccent,
+                  ),
                 ),
-              ),
-              const PlaybackSpeedButton(),
-            ],
-          )
-        ],
+                const PlaybackSpeedButton(),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
