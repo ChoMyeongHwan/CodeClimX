@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codeclimx/quiz/widgets/custom_bottom_navbar.dart';
+import 'package:codeclimx/common/widget/custom_bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import '../models/gpt_api.dart';
 

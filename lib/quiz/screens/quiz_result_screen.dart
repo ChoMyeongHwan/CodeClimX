@@ -1,6 +1,6 @@
+import 'package:codeclimx/common/widget/custom_bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import '../models/quiz.dart';
-import '../widgets/custom_bottom_navbar.dart';
 import 'quiz_screen.dart';
 
 class QuizResultScreen extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:codeclimx/home/home_screen.dart';
-import 'package:codeclimx/utils.dart';
+import 'package:codeclimx/utils/utils.dart';
 import 'package:codeclimx/videos/authentication/repos/authentication_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../screens/quiz_detail_screen.dart';
-import '../themes/app_colors.dart' as app_colors;
+import '../../common/themes/app_colors.dart' as app_colors;
 
 class QuizListTile extends StatelessWidget {
   final dynamic video;

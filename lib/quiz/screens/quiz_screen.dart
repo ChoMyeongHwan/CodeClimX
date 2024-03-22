@@ -1,9 +1,9 @@
-import 'package:codeclimx/quiz/widgets/custom_bottom_navbar.dart';
+import 'package:codeclimx/common/widget/custom_bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../widgets/quiz_list_tile.dart';
 import '../services/firebase_service.dart';
-import '../themes/app_colors.dart' as app_colors;
+import '../../common/themes/app_colors.dart' as app_colors;
 
 class QuizScreen extends StatelessWidget {
   // utils 폴더에 상수를 관리하는 파일을 만들어 관리하는 방법 고려

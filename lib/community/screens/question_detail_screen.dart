@@ -1,12 +1,10 @@
+import 'package:codeclimx/common/widget/custom_bottom_navbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-import 'dart:ui' as ui;
-
-import '../../quiz/widgets/custom_bottom_navbar.dart';
 
 class QuestionDetailScreen extends StatefulWidget {
   const QuestionDetailScreen({super.key});
@@ -16,8 +14,8 @@ class QuestionDetailScreen extends StatefulWidget {
 }
 
 class _QuestionDetailState extends State<QuestionDetailScreen> {
-  String QuestionTitle = "CSS의 가상 클래스와 가상 요소 달디 달디 달고 달디 달고 달디단 밤양갱";
-  String Question = '아래 방식으로 설명해주세요! 달디 달디 달디 달디 달고 단 밤양갱갱ㄱ액액ㅇ개개액애';
+  String questionTitle = "CSS의 가상 클래스와 가상 요소 달디 달디 달고 달디 달고 달디단 밤양갱";
+  String question = '아래 방식으로 설명해주세요! 달디 달디 달디 달디 달고 단 밤양갱갱ㄱ액액ㅇ개개액애';
   String nickname = 'kimam******';
   String answerNickname = 'CodeClimX';
   String userAnswer =
@@ -61,7 +59,7 @@ class _QuestionDetailState extends State<QuestionDetailScreen> {
               width: MediaQuery.of(context).size.width,
               height: 113,
               child: Image.asset(
-                '../assets/banner.png',
+                'assets/banner.png',
                 fit: BoxFit.cover,
               ),
             ),
@@ -90,7 +88,7 @@ class _QuestionDetailState extends State<QuestionDetailScreen> {
                   ),
                   Expanded(
                     child: Text(
-                      QuestionTitle,
+                      questionTitle,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -117,17 +115,15 @@ class _QuestionDetailState extends State<QuestionDetailScreen> {
               ),
             ),
             const SizedBox(height: 25),
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    Question,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      height: 1.5,
-                    ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  question,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    height: 1.5,
                   ),
                 ),
               ),
@@ -135,11 +131,9 @@ class _QuestionDetailState extends State<QuestionDetailScreen> {
             const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Container(
-                child: Image.asset(
-                  '../assets/asdf.png',
-                  fit: BoxFit.cover,
-                ),
+              child: Image.asset(
+                'assets/asdf.png',
+                fit: BoxFit.cover,
               ),
             ),
             const SizedBox(height: 50),
@@ -275,7 +269,7 @@ class _QuestionDetailState extends State<QuestionDetailScreen> {
                             radius: 30,
                             backgroundColor: Colors.white, // 프로필 이미지 배경색
                             child: Image.asset(
-                              '../assets/logo.png',
+                              'assets/logo.png',
                               fit: BoxFit.cover,
                             ), // 기본 사용자 아이콘, 여기에 이미지를 넣을 수 있음
                           ),

@@ -1,10 +1,10 @@
-import 'package:codeclimx/chatbot/components/chatbot_widget.dart';
+import 'package:codeclimx/chatbot/widgets/chatbot_widget.dart';
+import 'package:codeclimx/common/widget/custom_bottom_navbar.dart';
 import 'package:codeclimx/videos/authentication/repos/authentication_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:codeclimx/quiz/widgets/custom_bottom_navbar.dart'; // 하단 네비게이션 바 추가
-import '../quiz/themes/app_colors.dart' as app_colors; // 색상 테마 추가
+import '../common/themes/app_colors.dart' as app_colors; // 색상 테마 추가
 
 class HomeScreen extends ConsumerStatefulWidget {
   static const String routeName = 'home';

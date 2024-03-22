@@ -1,5 +1,5 @@
+import 'package:codeclimx/chatbot/screens/chatbot_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:codeclimx/chatbot/pages/chatbot_page.dart';
 
 class ChatBotWidget extends StatelessWidget {
   const ChatBotWidget({super.key});
