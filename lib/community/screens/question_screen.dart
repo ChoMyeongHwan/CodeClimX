@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codeclimx/quiz/widgets/custom_bottom_navbar.dart';
 import 'package:flutter/material.dart';
+import '../models/gpt_api.dart';
 
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({super.key});
@@ -11,6 +13,11 @@ class QuestionScreen extends StatefulWidget {
 class _QuestionScreenState extends State<QuestionScreen> {
   String selCategorie = 'All';
   String selLanguage = 'Python';
+
+  //textfield 내용 변수에 담기
+  TextEditingController titleController = TextEditingController();
+  TextEditingController contentController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -209,21 +216,22 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           BorderRadius.circular(10.0), // 흰색 박스의 둥근 모서리 설정
                       color: Colors.white, // 흰색 박스의 배경색 설정
                     ),
-                    child: const Column(
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         TextField(
-                          decoration: InputDecoration(
+                          controller: titleController,
+                          decoration: const InputDecoration(
                             hintText: '제목 (필수)',
                           ),
                         ),
-                        SizedBox(height: 8.0),
+                        const SizedBox(height: 8.0),
                         SingleChildScrollView(
                           child: TextField(
-                            decoration: InputDecoration(
+                            controller: contentController,
+                            decoration: const InputDecoration(
                               border: InputBorder.none,
-                              hintText:
-                                  '\n궁금한 내용을 질문해 주세요. \n\n- 답변이 등록되면 질문 수정/삭제가 불가합니다. \n- 질문 내용에 개인정보가 포함되지 않게 해주세요. \n- 피해를 입으셨다면, 서비스에 신고, 112 또는 사이버경찰청으로 신고 부탁드립니다.',
+                              hintText: '궁금한 내용을 질문해 주세요...',
                             ),
                             maxLines: 14,
                           ),
@@ -258,31 +266,26 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         ],
                       ),
                       child: TextButton(
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // Text(
+                            //   '+image', // 버튼에 표시될 텍스트 설정
+                            //   style: TextStyle(
+                            //     color: Colors.white, // 흰색 텍스트 색상 설정
+                            //     fontSize: 16,
+                            //     fontWeight: FontWeight.bold, // 텍스트 크기 설정
+                            //   ),
+                            // ),
+                            Icon(
+                              Icons.add_photo_alternate_outlined, // 추가할 아이콘
+                              color: Colors.white, // 아이콘 색상 설정
+                            ),
+                          ],
+                        ),
                         onPressed: () {
                           // 버튼을 눌렀을 때 실행될 기능
                         },
-                        child: TextButton(
-                          onPressed: () {
-                            // 버튼을 눌렀을 때 실행될 기능
-                          },
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Text(
-                              //   '+image', // 버튼에 표시될 텍스트 설정
-                              //   style: TextStyle(
-                              //     color: Colors.white, // 흰색 텍스트 색상 설정
-                              //     fontSize: 16,
-                              //     fontWeight: FontWeight.bold, // 텍스트 크기 설정
-                              //   ),
-                              // ),
-                              Icon(
-                                Icons.add_photo_alternate_outlined, // 추가할 아이콘
-                                color: Colors.white, // 아이콘 색상 설정
-                              ),
-                            ],
-                          ),
-                        ),
                       ),
                     ),
                   ),
@@ -307,7 +310,40 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           color: Colors.green,
                         ),
                         onPressed: () {
-                          // 버튼을 눌렀을 때 실행될 기능
+                          String title = titleController.text;
+                          String content = contentController.text;
+
+                          // 제목과 내용을 결합하거나, 둘 중 하나만 사용할 수도 있습니다.
+                          // 여기서는 예시로 두 문자열을 연결하고 있습니다.
+                          String userInput = "$title\n$content";
+
+                          //질문 firebase 저장
+                          // Firestore 인스턴스 생성
+                          FirebaseFirestore firestore =
+                              FirebaseFirestore.instance;
+
+                          // Firestore 'community_question' 컬렉션에 데이터 추가
+                          firestore.collection('community_question').add({
+                            'title': title,
+                            'content': content,
+                            'create_date':
+                                DateTime.now().toString(), // 현재 날짜와 시간을 문자열로 저장
+                            'favorite': '0', // 초기 좋아요 수는 0으로 설정
+                          }).then(
+                            (DocumentReference docRef) {
+                              String docId = docRef.id;
+
+                              // gpt_api.dart 파일에 있는 함수에 결합된 문자열 전달
+                              fetchChatGptResponse(userInput, docId)
+                                  .then((response) {
+                                // 성공적으로 처리된 경우, 결과를 처리합니다.
+                                print(response);
+                              }).catchError((error) {
+                                // 오류 처리
+                                print(error);
+                              });
+                            },
+                          );
                         },
                       ),
                     ),
