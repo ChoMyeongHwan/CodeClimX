@@ -157,7 +157,7 @@ class CommunityScreen extends StatelessWidget {
             const Column(
               children: [
                 CategoryButton(),
-                QuestionListTile(),
+                QuestionListTitle(),
               ],
             )
           ],
@@ -167,6 +167,7 @@ class CommunityScreen extends StatelessWidget {
         currentIndex: 3,
       ),
       floatingActionButton: FloatingActionButton(
+        //글쓰기 버튼
         onPressed: () {
           Navigator.push(
             context,
