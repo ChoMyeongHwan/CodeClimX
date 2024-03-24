@@ -355,7 +355,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         ),
       ),
       bottomNavigationBar: const CustomBottomNavbar(
-        currentIndex: 3,
+        currentIndex: 4,
       ),
     );
   }
