@@ -22,9 +22,12 @@ class CustomBottomNavbar extends StatelessWidget {
             context.go('/roadmap');
             break;
           case 2:
-            context.go('/quiz');
+            context.go('/chatbot');
             break;
           case 3:
+            context.go('/quiz');
+            break;
+          case 4:
             context.go('/community');
             break;
         }
@@ -40,6 +43,10 @@ class CustomBottomNavbar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(Icons.videocam),
           label: '동영상',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.message),
+          label: '챗봇',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.quiz),

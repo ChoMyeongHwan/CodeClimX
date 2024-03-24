@@ -164,7 +164,7 @@ class CommunityScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: const CustomBottomNavbar(
-        currentIndex: 3,
+        currentIndex: 4,
       ),
       floatingActionButton: FloatingActionButton(
         //글쓰기 버튼

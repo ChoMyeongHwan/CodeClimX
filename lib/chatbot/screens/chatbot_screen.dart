@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codeclimx/chatbot/model/chat.dart';
 import 'package:codeclimx/chatbot/service/database.dart';
+import 'package:codeclimx/common/themes/app_colors.dart';
+import 'package:codeclimx/common/widget/custom_bottom_navbar.dart';
+import 'package:codeclimx/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -139,6 +142,9 @@ class ChatMessage {
 }
 
 class ChatbotPage extends StatefulWidget {
+  static const String routeName = "chatbot";
+  static const String routeURL = "/chatbot";
+
   const ChatbotPage({super.key});
 
   @override
@@ -230,6 +236,25 @@ class _ChatbotPageState extends State<ChatbotPage> {
     return Column(
       crossAxisAlignment: alignment,
       children: <Widget>[
+        // Add text "xbot" above received messages
+        if (!message.isSentByMe)
+          Text(
+            "xbot",
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+        // Add text "me" above sent messages
+        if (message.isSentByMe)
+          Text(
+            "me",
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
@@ -251,6 +276,11 @@ class _ChatbotPageState extends State<ChatbotPage> {
       data: IconThemeData(color: Theme.of(context).colorScheme.secondary),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(color: Colors.white), // Add top border
+          ),
+        ),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -277,32 +307,38 @@ class _ChatbotPageState extends State<ChatbotPage> {
       appBar: AppBar(
         title: const Text('Chatbot'),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Flexible(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(8.0),
-              reverse: true,
-              itemBuilder: (_, int index) =>
-                  _buildMessage(_messages[index], context),
-              itemCount: _messages.length,
-            ),
-          ),
-          if (_isAwaitingResponse) // Only show one typing indicator based on the flag
-            const Align(
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                // Wrap with Padding for better control
-                padding: EdgeInsets.only(left: 14.0, bottom: 8.0),
-                child: TypingIndicator(
-                  dotSize: 8.0,
-                ),
+      body: ColoredBox(
+        color: secondaryColor,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Flexible(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(8.0),
+                reverse: true,
+                itemBuilder: (_, int index) =>
+                    _buildMessage(_messages[index], context),
+                itemCount: _messages.length,
               ),
             ),
-          const Divider(height: 1.0),
-          _buildTextComposer(),
-        ],
+            if (_isAwaitingResponse) // Only show one typing indicator based on the flag
+              const Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  // Wrap with Padding for better control
+                  padding: EdgeInsets.only(left: 14.0, bottom: 8.0),
+                  child: TypingIndicator(
+                    dotSize: 8.0,
+                  ),
+                ),
+              ),
+            const Divider(height: 1.0),
+            _buildTextComposer(),
+          ],
+        ),
+      ),
+      bottomNavigationBar: const CustomBottomNavbar(
+        currentIndex: 2,
       ),
     );
   }
