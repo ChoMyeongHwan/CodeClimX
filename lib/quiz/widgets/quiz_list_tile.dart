@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import '../widgets/quiz_type_modal.dart';
 import '../screens/quiz_detail_screen.dart';
+import '../screens/descriptive_detail_screen.dart';
 import '../../common/themes/app_colors.dart' as app_colors;
 
 class QuizListTile extends StatelessWidget {
@@ -15,19 +17,37 @@ class QuizListTile extends StatelessWidget {
         leading:
             const Icon(Icons.play_circle_fill, color: app_colors.primaryColor),
         title: Text(
-          video.data()?['videoName'] ?? '제목 없음', // videoName이 없다면 '제목 없음'을 사용
-          style: const TextStyle(
-            fontSize: 18,
-          ),
+          video.data()?['videoName'] ?? '제목 없음',
+          style: const TextStyle(fontSize: 18),
         ),
         trailing: const Icon(Icons.arrow_forward_ios),
-        onTap: () {
+        onTap: () => _showQuizTypeModal(context, video.id), // 여기서 모달을 띄움
+      ),
+    );
+  }
+
+  void _showQuizTypeModal(BuildContext context, String videoId) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => QuizTypeModal(
+        onMultipleSelected: () {
+          Navigator.pop(context); // 모달창 닫기
           Navigator.push(
+            // 객관식 퀴즈 상세 화면으로 이동
             context,
             MaterialPageRoute(
-              builder: (context) => QuizDetailScreen(
-                videoDocId: video.id,
-              ),
+              builder: (context) => QuizDetailScreen(videoDocId: videoId),
+            ),
+          );
+        },
+        onDescripiveSelected: () {
+          Navigator.pop(context); // 모달창 닫기
+          Navigator.push(
+            // 주관식 퀴즈 상세 화면으로 이동
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  DescriptiveDetailScreen(videoDocId: videoId),
             ),
           );
         },
