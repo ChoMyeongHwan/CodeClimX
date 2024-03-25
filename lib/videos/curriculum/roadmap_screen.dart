@@ -64,7 +64,7 @@ class _RoadmapScreenState extends State<RoadmapScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("RoadMaps"),
+        title: const Text("Lectures"),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),

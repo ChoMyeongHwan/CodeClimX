@@ -1,3 +1,4 @@
+import 'package:codeclimx/common/widget/custom_bottom_navbar.dart';
 import 'package:codeclimx/videos/curriculum/lecture_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,19 +9,22 @@ class Section {
   final String startTime;
   final String videoUrl;
   final int second;
+  final String detail;
 
   Section(
       {required this.title,
       required this.summary,
       required this.startTime,
       required this.videoUrl,
-      required this.second});
+      required this.second,
+      required this.detail});
 }
 
 class TopicsScreen extends StatefulWidget {
   final String videoId;
+  final String title;
 
-  const TopicsScreen({super.key, required this.videoId});
+  const TopicsScreen({super.key, required this.videoId, required this.title});
 
   @override
   _TopicsScreenState createState() => _TopicsScreenState();
@@ -53,6 +57,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
           startTime: data['timestamp'] ?? '00:00:00',
           videoUrl: data['url'] ?? '',
           second: data['second'] ?? 0,
+          detail: data['sectionSum'] ?? "No Detail",
         );
       }).toList();
 
@@ -67,7 +72,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sections Detail'),
+        title: Text(widget.title),
       ),
       body: FutureBuilder<List<Section>>(
         future: sectionsFuture,
@@ -98,8 +103,11 @@ class _TopicsScreenState extends State<TopicsScreen> {
                       MaterialPageRoute(
                         builder: (context) =>
                             //LectureScreen(url: sections[index].videoUrl),
-                            LectureScreen(sections[index].videoUrl,
-                                sections[index].title, sections[index].second),
+                            LectureScreen(
+                                sections[index].videoUrl,
+                                sections[index].title,
+                                sections[index].second,
+                                sections[index].detail),
                       ),
                     );
                   },
@@ -108,6 +116,9 @@ class _TopicsScreenState extends State<TopicsScreen> {
             },
           );
         },
+      ),
+      bottomNavigationBar: const CustomBottomNavbar(
+        currentIndex: 1,
       ),
     );
   }

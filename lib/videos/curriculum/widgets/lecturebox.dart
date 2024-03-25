@@ -14,7 +14,10 @@ class LectureBox extends StatelessWidget {
       onTap: () {
         // onTap 이벤트 핸들러에서 SectionDetailScreen으로 네비게이션
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => TopicsScreen(videoId: lecture.videoId)));
+            builder: (context) => TopicsScreen(
+                  videoId: lecture.videoId,
+                  title: lecture.title,
+                )));
       },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
