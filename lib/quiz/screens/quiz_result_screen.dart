@@ -85,7 +85,7 @@ class QuizResultScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: const CustomBottomNavbar(
-        currentIndex: 2,
+        currentIndex: 3,
       ),
     );
   }

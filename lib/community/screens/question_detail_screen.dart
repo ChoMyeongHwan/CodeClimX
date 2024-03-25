@@ -1,9 +1,6 @@
 import 'package:codeclimx/common/widget/custom_bottom_navbar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+import '../../common/themes/app_colors.dart' as app_colors;
 import 'package:intl/intl.dart';
 
 class QuestionDetailScreen extends StatefulWidget {
@@ -41,12 +38,13 @@ class _QuestionDetailState extends State<QuestionDetailScreen> {
         backgroundColor: Colors.white,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.menu, color: Colors.purple, size: 30),
+          icon: const Icon(Icons.menu, color: app_colors.iconColor, size: 30),
           onPressed: () {},
         ),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.person, color: Colors.purple, size: 30),
+            icon:
+                const Icon(Icons.person, color: app_colors.iconColor, size: 30),
             onPressed: () {},
           ),
         ],

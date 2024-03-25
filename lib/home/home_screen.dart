@@ -1,4 +1,3 @@
-import 'package:codeclimx/chatbot/widgets/chatbot_widget.dart';
 import 'package:codeclimx/common/widget/custom_bottom_navbar.dart';
 import 'package:codeclimx/videos/authentication/repos/authentication_repo.dart';
 import 'package:flutter/material.dart';
@@ -64,8 +63,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ],
         ),
       ),
-      //floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      //floatingActionButton: const ChatBotWidget(),
       bottomNavigationBar:
           const CustomBottomNavbar(currentIndex: 0), // 현재 인덱스 수정
     );
