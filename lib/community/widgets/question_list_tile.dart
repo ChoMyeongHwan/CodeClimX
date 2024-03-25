@@ -15,6 +15,12 @@ String selectedButtonText = 'All';
 int answersCount = 0;
 
 class _QuestionListTitleState extends State<QuestionListTitle> {
+  @override
+  void initState() {
+    super.initState();
+    _fetchQuestions(); // 질문 목록을 가져오는 함수를 호출
+  }
+
   //question 제목
   List<String> questionTitles = [];
   //AI 상태
@@ -24,13 +30,6 @@ class _QuestionListTitleState extends State<QuestionListTitle> {
 
   //문서 수
   late int questionListLength;
-
-  @override
-  void initState() {
-    super.initState();
-    initializeData();
-    _fetchQuestions();
-  }
 
   Future<void> initializeData() async {
     int docLength = await countDocuments();
@@ -73,133 +72,155 @@ class _QuestionListTitleState extends State<QuestionListTitle> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const QuestionDetailScreen()),
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFFEFEFEF),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        padding: const EdgeInsets.only(top: 30),
-        child: Column(
-          children: <Widget>[
-            for (int i = 0; i < questionListLength; i++)
-              Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: BoxDecoration(
-                  color: i % 2 == 0
-                      ? const Color(0xFFE7E2FF)
-                      : const Color(0xFFCAC0FF),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.8),
-                      spreadRadius: 1,
-                      blurRadius: 2,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                height: 100,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 5, left: 5), // 좌측에 10의 패딩 추가
-                              child: Text(
-                                questionTitles[i],
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            const Spacer(), // 제목과 답변 사이에 공간을 채우기 위해 Spacer 추가
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 5, bottom: 5), // 좌측과 상단에 각각 10의 패딩 추가
-                              child: Text(
-                                '답변 $answersCount', // answersCount는 동적으로 바뀌는 답변의 숫자입니다.
-                                style: TextStyle(color: Colors.grey[600]),
-                              ),
-                            ),
-                          ],
-                        ),
+    return FutureBuilder<int>(
+      // initializeData를 호출하지 않고, 직접 비동기 함수를 future로 사용
+      future: countDocuments(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // 데이터를 기다리는 동안 로딩 인디케이터를 표시
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          // 에러 발생 시 처리 로직
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (snapshot.hasData) {
+          // 데이터가 준비되면, UI를 빌드
+          int questionListLength = snapshot.data ?? 0;
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const QuestionDetailScreen()),
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFFEFEFEF),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              padding: const EdgeInsets.only(top: 30),
+              child: Column(
+                children: <Widget>[
+                  for (int i = 0; i < questionListLength; i++)
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: i % 2 == 0
+                            ? const Color(0xFFE7E2FF)
+                            : const Color(0xFFCAC0FF),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.8),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 10),
-                      // aiStatus가 true일 때만 AI 컨테이너를 보여줍니다.
-                      Align(
-                        alignment: Alignment.bottomRight,
+                      height: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Row(
-                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Visibility(
-                              visible:
-                                  aiStatus[i], // aiStatus는 boolean 타입이어야 합니다.
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 8),
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 255, 255, 255),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: const Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Text(
-                                      'AI ',
-                                      style: TextStyle(
-                                        color: Color(0xFF6E41E2),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 5, left: 5), // 좌측에 10의 패딩 추가
+                                    child: Text(
+                                      questionTitles[i],
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    Icon(
-                                      Icons.check,
-                                      color: Colors.green,
-                                      size: 22.0,
+                                  ),
+                                  const Spacer(), // 제목과 답변 사이에 공간을 채우기 위해 Spacer 추가
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 5,
+                                        bottom: 5), // 좌측과 상단에 각각 10의 패딩 추가
+                                    child: Text(
+                                      '답변 $answersCount', // answersCount는 동적으로 바뀌는 답변의 숫자입니다.
+                                      style: TextStyle(color: Colors.grey[600]),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                             const SizedBox(width: 10),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF6E41E2),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: const Text(
-                                '2분 전',
-                                style: TextStyle(color: Colors.white),
+                            // aiStatus가 true일 때만 AI 컨테이너를 보여줍니다.
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Visibility(
+                                    visible: aiStatus[
+                                        i], // aiStatus는 boolean 타입이어야 합니다.
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 8),
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                            255, 255, 255, 255),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: const Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Text(
+                                            'AI ',
+                                            style: TextStyle(
+                                              color: Color(0xFF6E41E2),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.check,
+                                            color: Colors.green,
+                                            size: 22.0,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF6E41E2),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: const Text(
+                                      '2분 전',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                ],
               ),
-          ],
-        ),
-      ),
+            ),
+          );
+        } else {
+          // snapshot에 데이터가 없을 때 처리 로직
+          return const Center(child: Text('No data available'));
+        }
+      },
     );
   }
 }

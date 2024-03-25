@@ -62,7 +62,7 @@ class QuizDetailScreenState extends State<QuizDetailScreen> {
             : Icons.check),
       ),
       bottomNavigationBar: const CustomBottomNavbar(
-        currentIndex: 2,
+        currentIndex: 3,
       ),
     );
   }

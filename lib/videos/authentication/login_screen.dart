@@ -1,10 +1,8 @@
 import 'package:codeclimx/videos/authentication/login_form_screen.dart';
-import 'package:codeclimx/videos/authentication/repos/authentication_repo.dart';
 import 'package:codeclimx/videos/authentication/widgets/auth_button.dart';
 import 'package:codeclimx/videos/constants/gaps.dart';
 import 'package:codeclimx/videos/constants/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
@@ -45,7 +43,6 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v20,
-
               const Opacity(
                 opacity: 0.7,
                 child: Text(
@@ -65,15 +62,6 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v16,
-              // GestureDetector(
-              //   onTap: () {
-              //     signInWithGoogle();
-              //   },
-              //   child: const AuthButton(
-              //     icon: FaIcon(FontAwesomeIcons.google),
-              //     text: "Continue with Google",
-              //   ),
-              // ),
             ],
           ),
         ),

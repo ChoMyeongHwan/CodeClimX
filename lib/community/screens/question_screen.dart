@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codeclimx/common/widget/custom_bottom_navbar.dart';
+import 'package:codeclimx/community/screens/community_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/gpt_api.dart';
 
@@ -319,7 +320,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           // 제목과 내용을 결합하거나, 둘 중 하나만 사용할 수도 있습니다.
                           // 여기서는 예시로 두 문자열을 연결하고 있습니다.
                           String userInput = "$title\n$content";
-
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CommunityScreen()),
+                          );
                           //질문 firebase 저장
                           // Firestore 'community_question' 컬렉션에 데이터 추가
                           firestore.collection('community_question').add({
