@@ -26,7 +26,7 @@ class CommunityScreen extends StatelessWidget {
           onPressed: () {},
         ),
         title: const Text(
-          '커뮤니티',
+          'community',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w600,
@@ -109,7 +109,7 @@ class CommunityScreen extends StatelessWidget {
                                   right: 10.0,
                                 ),
                                 child: Text(
-                                  'Q.질문 클래스와 인터페이스의 차이는 무엇인가요?',
+                                  'Q.html의 기본 요소는 뭐야?',
                                   style: TextStyle(
                                     color: Color(0xFF464646),
                                     fontSize: 20,
@@ -125,12 +125,12 @@ class CommunityScreen extends StatelessWidget {
                               bottom: 5.0,
                               right: 10.0,
                               child: Text(
-                                '확인',
+                                'Html',
                                 style: TextStyle(
                                   color: index.isEven
                                       ? const Color(0xFF7B5FDA)
                                       : const Color(0xFFF6AE21),
-                                  fontSize: 40,
+                                  fontSize: 50,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),

@@ -1,4 +1,5 @@
 // 질문
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/question_detail_screen.dart';
@@ -12,10 +13,64 @@ class QuestionListTitle extends StatefulWidget {
 
 String selectedButtonText = 'All';
 int answersCount = 0;
-bool aiStatus = true;
-String question = 'CSS의 가상 클래스와 가상 요소';
 
 class _QuestionListTitleState extends State<QuestionListTitle> {
+  //question 제목
+  List<String> questionTitles = [];
+  //AI 상태
+  List<bool> aiStatus = [];
+  //문서id
+  List<String> documentIds = [];
+
+  //문서 수
+  late int questionListLength;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeData();
+    _fetchQuestions();
+  }
+
+  Future<void> initializeData() async {
+    int docLength = await countDocuments();
+    setState(() {
+      questionListLength = docLength;
+    });
+  }
+
+  Future<void> _fetchQuestions() async {
+    // Firestore에서 'community_question' 컬렉션의 문서 가져오기
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('community_question').get();
+
+    // 가져온 각 문서의 필드 값을 리스트에 추가
+    for (var doc in querySnapshot.docs) {
+      var data = doc.data() as Map<String, dynamic>; // 데이터를 Map으로 캐스팅
+      var title = data['title']; // 'title' 필드 값 가져오기
+      var status = data['aiStatus']; // 'aiStatus' 필드 값 가져오기
+      var docId = doc.id; // 문서 ID 가져오기
+
+      if (title != null && status != null) {
+        setState(() {
+          // questionTitles에 title 추가
+          questionTitles.add(title);
+          // aiStatus에 status 추가
+          aiStatus.add(status);
+          // 문서 ID를 저장하는 리스트에 추가
+          documentIds.add(docId);
+        });
+      }
+    }
+  }
+
+  Future<int> countDocuments() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('community_question').get();
+    int documentCount = querySnapshot.size;
+    return documentCount;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -33,7 +88,7 @@ class _QuestionListTitleState extends State<QuestionListTitle> {
         padding: const EdgeInsets.only(top: 30),
         child: Column(
           children: <Widget>[
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < questionListLength; i++)
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -65,7 +120,7 @@ class _QuestionListTitleState extends State<QuestionListTitle> {
                               padding: const EdgeInsets.only(
                                   top: 5, left: 5), // 좌측에 10의 패딩 추가
                               child: Text(
-                                question,
+                                questionTitles[i],
                                 style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
                                 maxLines: 1,
@@ -92,7 +147,8 @@ class _QuestionListTitleState extends State<QuestionListTitle> {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Visibility(
-                              visible: aiStatus, // aiStatus는 boolean 타입이어야 합니다.
+                              visible:
+                                  aiStatus[i], // aiStatus는 boolean 타입이어야 합니다.
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 8),
