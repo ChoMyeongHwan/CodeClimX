@@ -21,8 +21,23 @@ class DescriptiveDetailScreenState extends State<DescriptiveDetailScreen> {
   @override
   void initState() {
     super.initState();
-    // Firebase로부터 주관식 데이터를 비동기적으로 가져옴
-    _descriptiveFuture = FirebaseService().loadDescriptives(widget.videoDocId);
+    _descriptiveFuture = FirebaseService()
+        .loadDescriptives(widget.videoDocId)
+        .then((descriptives) {
+      // _controllers가 아직 채워지지 않았다면 한 번만 채우도록 함.
+      if (_controllers.isEmpty) {
+        setState(() {
+          // _controllers에 새로 할당하는 대신, 기존 리스트에 요소들을 추가.
+          _controllers.addAll(
+            List.generate(
+              descriptives.length,
+              (index) => TextEditingController(),
+            ),
+          );
+        });
+      }
+      return descriptives;
+    });
   }
 
   @override
@@ -45,7 +60,6 @@ class DescriptiveDetailScreenState extends State<DescriptiveDetailScreen> {
       List<Descriptive> descriptives = await _descriptiveFuture;
       int itemCount = descriptives.length;
       List<String> userAnswers = _controllers.map((c) => c.text).toList();
-      // print('--- 주관식 상세화면 : $userAnswers ---');
 
       for (int i = 0; i < itemCount; i++) {
         final prompt = '질문: ${descriptives[i].question}\n'
@@ -97,11 +111,11 @@ class DescriptiveDetailScreenState extends State<DescriptiveDetailScreen> {
 
   // 주관식 문항 하나를 위젯으로 만드는 함수
   Widget _buildDescriptiveItem(Descriptive descriptive, int index) {
-    // 초기에는 힌트를 숨깁니다.
+    // 현재 인덱스에 해당하는 기존 컨트롤러를 사용
+    final controller = _controllers[index];
+
+    // 초기에는 힌트를 숨김
     bool isHintVisible = false;
-    // 각 문항에 대한 텍스트 입력 컨트롤러를 생성
-    TextEditingController controller = TextEditingController();
-    _controllers.add(controller);
 
     // StatefulBuilder를 사용하여 setState를 호출할 때
     // 오직 이 카드 내부의 위젯만 다시 빌드되도록 함

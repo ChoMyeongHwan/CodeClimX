@@ -1,5 +1,7 @@
+import 'package:codeclimx/quiz/screens/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/descriptive.dart';
+import '../../common/themes/app_colors.dart' as app_colors;
 
 class DescriptiveResultScreen extends StatelessWidget {
   final List<Descriptive> descriptives;
@@ -19,7 +21,16 @@ class DescriptiveResultScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('퀴즈 결과'),
         centerTitle: true,
-        backgroundColor: Colors.blue,
+        backgroundColor: app_colors.primaryColor,
+        leading: IconButton(
+          icon: const Icon(Icons.home),
+          onPressed: () {
+            // 모든 스택을 제거하고 홈 화면으로 이동
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const QuizScreen()),
+            );
+          },
+        ),
       ),
       body: ListView.builder(
         itemCount: descriptives.length,
@@ -27,7 +38,6 @@ class DescriptiveResultScreen extends StatelessWidget {
           final descriptive = descriptives[index];
           final userAnswer = userAnswers[index];
           final feedback = gptFeedbacks[index];
-          print('---결과화면 : $userAnswer---');
           return Card(
             margin: const EdgeInsets.all(8.0),
             child: Padding(
@@ -52,7 +62,7 @@ class DescriptiveResultScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8.0),
                   Text(
-                    '피드백: $feedback',
+                    feedback,
                     style: TextStyle(
                       fontSize: 14.0,
                       color: Colors.green[700],
