@@ -36,6 +36,7 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               Gaps.v80,
+              Image.asset("assets/logo.png"),
               const Text(
                 "Log in to CodeClimX",
                 style: TextStyle(
@@ -44,6 +45,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v20,
+
               const Opacity(
                 opacity: 0.7,
                 child: Text(
@@ -63,15 +65,15 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v16,
-              GestureDetector(
-                onTap: () {
-                  signInWithGoogle();
-                },
-                child: const AuthButton(
-                  icon: FaIcon(FontAwesomeIcons.google),
-                  text: "Continue with Google",
-                ),
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     signInWithGoogle();
+              //   },
+              //   child: const AuthButton(
+              //     icon: FaIcon(FontAwesomeIcons.google),
+              //     text: "Continue with Google",
+              //   ),
+              // ),
             ],
           ),
         ),

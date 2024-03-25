@@ -37,6 +37,7 @@ class SignUpScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Gaps.v80,
+              Image.asset("assets/logo.png"),
               const Text(
                 "Sign up for CodeClimX",
                 style: TextStyle(
@@ -62,10 +63,10 @@ class SignUpScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v16,
-              const AuthButton(
-                icon: FaIcon(FontAwesomeIcons.google),
-                text: "Continue with Google",
-              ),
+              // const AuthButton(
+              //   icon: FaIcon(FontAwesomeIcons.google),
+              //   text: "Continue with Google",
+              // ),
             ],
           ),
         ),
