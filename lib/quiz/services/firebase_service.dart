@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../models/descriptive.dart';
 import '../models/quiz.dart';
 
 class FirebaseService {
@@ -15,10 +16,24 @@ class FirebaseService {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('quizzes')
         .where('video_id', isEqualTo: videoDocId)
+        .where('type', isEqualTo: 'multiple') // 객관식 퀴즈만 필터링
         .get();
 
     return querySnapshot.docs
         .map((doc) => Quiz.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .toList();
+  }
+
+  Future<List<Descriptive>> loadDescriptives(String videoDocId) async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('quizzes')
+        .where('video_id', isEqualTo: videoDocId)
+        .where('type', isEqualTo: 'descriptive') // 주관식 퀴즈만 필터링
+        .get();
+
+    return querySnapshot.docs
+        .map((doc) =>
+            Descriptive.fromMap(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 }

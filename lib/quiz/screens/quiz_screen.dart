@@ -1,8 +1,8 @@
-import 'package:codeclimx/common/widget/custom_bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../widgets/quiz_list_tile.dart';
 import '../services/firebase_service.dart';
+import '../../common/widget/custom_bottom_navbar.dart';
 import '../../common/themes/app_colors.dart' as app_colors;
 
 class QuizScreen extends StatelessWidget {
