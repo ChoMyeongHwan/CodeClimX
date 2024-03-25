@@ -50,6 +50,13 @@ Future<String> fetchChatGptResponse(String userInput, String docId) async {
       'question_id': docId,
     });
 
+    await FirebaseFirestore.instance
+        .collection('community_question')
+        .doc(docId)
+        .update({
+      'aiStatus': true,
+    });
+
     return answerContent; // 또는 필요에 따라 가공하여 반환
   } else {
     throw Exception('Failed to load response: ${response.body}');

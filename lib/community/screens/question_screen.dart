@@ -11,6 +11,9 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
+  // Firestore 인스턴스 생성
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   String selCategorie = 'All';
   String selLanguage = 'Python';
 
@@ -318,10 +321,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           String userInput = "$title\n$content";
 
                           //질문 firebase 저장
-                          // Firestore 인스턴스 생성
-                          FirebaseFirestore firestore =
-                              FirebaseFirestore.instance;
-
                           // Firestore 'community_question' 컬렉션에 데이터 추가
                           firestore.collection('community_question').add({
                             'title': title,
@@ -329,6 +328,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                             'create_date':
                                 DateTime.now().toString(), // 현재 날짜와 시간을 문자열로 저장
                             'favorite': '0', // 초기 좋아요 수는 0으로 설정
+                            'aiStatus': false,
                           }).then(
                             (DocumentReference docRef) {
                               String docId = docRef.id;
