@@ -330,7 +330,7 @@ class _QuestionDetailState extends State<QuestionDetailScreen> {
         ),
       ),
       bottomNavigationBar: const CustomBottomNavbar(
-        currentIndex: 3,
+        currentIndex: 4,
       ),
     );
   }
