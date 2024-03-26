@@ -16,21 +16,6 @@ class LectureScreen extends StatefulWidget {
   @override
   State<LectureScreen> createState() =>
       _LectureScreenState(_videoUrl, _videoTitle, _timestamp, _detail);
-
-  // @override
-  // State<LectureScreen> createState() => _LectureScreenState();
-
-  //   @override
-//   LectureScreenState createState() => LectureScreenState(_videoID, _videoTitle);
-// }
-
-// class LectureScreenState extends State<LectureScreen> {
-//   final String _videoID;
-//   final String _videoTitle;
-
-//   LectureScreenState(this._videoID, this._videoTitle);
-
-//   late YoutubePlayerController _controller;
 }
 
 class _LectureScreenState extends State<LectureScreen> {
@@ -43,6 +28,7 @@ class _LectureScreenState extends State<LectureScreen> {
       this._videoUrl, this._videoTitle, this._timestamp, this._detail);
 
   late YoutubePlayerController _controller;
+  bool _isFullScreen = false;
 
   @override
   void initState() {
@@ -54,7 +40,15 @@ class _LectureScreenState extends State<LectureScreen> {
         autoPlay: true,
         startAt: (_timestamp),
       ),
-    );
+    )..addListener(() {
+        // 컨트롤러 리스너 추가
+        if (_isFullScreen != _controller.value.isFullScreen) {
+          // 전체 화면 상태가 변경되면 상태 업데이트
+          setState(() {
+            _isFullScreen = _controller.value.isFullScreen;
+          });
+        }
+      });
 
     super.initState();
   }
@@ -65,55 +59,63 @@ class _LectureScreenState extends State<LectureScreen> {
   }
 
   @override
-  Widget build(
-    BuildContext context,
-  ) {
+  Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: Text(_videoTitle)),
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(_videoTitle),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.home),
-            onPressed: () => _onHomeTap(context),
-          ),
-        ],
-      ),
+      appBar: _isFullScreen
+          ? null
+          : AppBar(
+              // 전체 화면일 때 앱 바 숨김
+              centerTitle: true,
+              title: Text(widget._videoTitle),
+              actions: <Widget>[
+                IconButton(
+                  icon: const Icon(Icons.home),
+                  onPressed: () => _onHomeTap(context),
+                ),
+              ],
+            ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            YoutubePlayer(
-              controller: _controller,
-              showVideoProgressIndicator: true,
-              onReady: () => debugPrint('Ready'),
-              bottomActions: [
-                CurrentPosition(),
-                ProgressBar(
-                  isExpanded: true,
-                  colors: const ProgressBarColors(
-                    playedColor: Colors.amber,
-                    handleColor: Colors.amberAccent,
+            // YoutubePlayer를 AspectRatio 위젯으로 감쌉니다
+            AspectRatio(
+              aspectRatio: 16 / 9, // 표준 YouTube 비디오 종횡비
+              child: YoutubePlayer(
+                controller: _controller,
+                showVideoProgressIndicator: true,
+                onReady: () => debugPrint('Ready'),
+                bottomActions: [
+                  CurrentPosition(),
+                  ProgressBar(
+                    isExpanded: true,
+                    colors: const ProgressBarColors(
+                      playedColor: Colors.amber,
+                      handleColor: Colors.amberAccent,
+                    ),
                   ),
-                ),
-                const PlaybackSpeedButton(),
-              ],
+                  FullScreenButton(
+                    controller: _controller,
+                    color: Colors.red,
+                  ),
+                ],
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0), // 상하좌우 여백을 줍니다.
+              padding: const EdgeInsets.all(8.0),
               child: Text(
-                _detail, // _detail 문자열을 화면에 출력합니다.
-                style: const TextStyle(fontSize: 16), // 텍스트 스타일 지정
+                widget._detail,
+                style: const TextStyle(fontSize: 16),
               ),
             ),
           ],
         ),
       ),
-
-      bottomNavigationBar: const CustomBottomNavbar(
-        currentIndex: 1,
-      ),
+      bottomNavigationBar: _isFullScreen
+          ? null
+          : const CustomBottomNavbar(
+              currentIndex: 1,
+            ),
     );
   }
 }

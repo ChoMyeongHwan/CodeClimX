@@ -59,6 +59,11 @@ class _RoadmapScreenState extends State<RoadmapScreen> {
     GoRouter.of(context).go('/home');
   }
 
+  void _onVideoSearchTap(BuildContext context) {
+    // 수정된 부분: GoRouter를 사용하여 홈 화면으로 이동
+    GoRouter.of(context).go('/videoSearch');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,6 +71,10 @@ class _RoadmapScreenState extends State<RoadmapScreen> {
         centerTitle: true,
         title: const Text("Lectures"),
         actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.search), // 검색 아이콘 추가
+            onPressed: () => _onVideoSearchTap(context),
+          ),
           IconButton(
             icon: const Icon(Icons.home),
             onPressed: () => _onHomeTap(context),

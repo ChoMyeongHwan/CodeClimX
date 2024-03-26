@@ -6,6 +6,7 @@ import 'package:codeclimx/videos/authentication/login_screen.dart';
 import 'package:codeclimx/videos/authentication/repos/authentication_repo.dart';
 import 'package:codeclimx/videos/authentication/sign_up_screen.dart';
 import 'package:codeclimx/videos/curriculum/roadmap_screen.dart';
+import 'package:codeclimx/videos/curriculum/search_result_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -62,6 +63,11 @@ final routerProvider = Provider((ref) {
         name: ChatbotPage.routeName,
         path: ChatbotPage.routeURL,
         builder: (context, state) => const ChatbotPage(),
+      ),
+      GoRoute(
+        name: SearchResultsScreen.routeName,
+        path: SearchResultsScreen.routeURL,
+        builder: (context, state) => const SearchResultsScreen(),
       ),
     ],
   );
