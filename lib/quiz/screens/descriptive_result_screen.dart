@@ -19,11 +19,19 @@ class DescriptiveResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('퀴즈 결과'),
+        title: const Text(
+          '퀴즈 결과',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
         centerTitle: true,
         backgroundColor: app_colors.primaryColor,
         leading: IconButton(
-          icon: const Icon(Icons.home),
+          icon: const Icon(
+            Icons.home,
+            color: Colors.white,
+          ),
           onPressed: () {
             // 모든 스택을 제거하고 홈 화면으로 이동
             Navigator.of(context).pushReplacement(

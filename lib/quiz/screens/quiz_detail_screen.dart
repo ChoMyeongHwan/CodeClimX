@@ -38,7 +38,7 @@ class QuizDetailScreenState extends State<QuizDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          '퀴즈 상세',
+          '객관식 퀴즈',
         ),
         centerTitle: true,
         backgroundColor: Colors.white,

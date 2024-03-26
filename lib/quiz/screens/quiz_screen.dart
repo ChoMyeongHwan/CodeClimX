@@ -27,7 +27,7 @@ class QuizScreen extends StatelessWidget {
           onPressed: () {},
         ),
         title: const Text(
-          '퀴즈',
+          'Quiz',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w600,
