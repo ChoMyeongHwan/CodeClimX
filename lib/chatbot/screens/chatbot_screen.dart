@@ -229,45 +229,64 @@ class _ChatbotPageState extends State<ChatbotPage> {
   Widget _buildMessage(ChatMessage message, BuildContext context) {
     final alignment =
         message.isSentByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start;
-    final color =
+    final messageColor =
         message.isSentByMe ? Colors.deepPurple : Colors.deepPurple[50];
     final textColor = message.isSentByMe ? Colors.white : Colors.black;
+    final borderRadius = message.isSentByMe
+        ? BorderRadius.only(
+            topLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+            bottomLeft: Radius.circular(20),
+          )
+        : BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          );
 
-    return Column(
-      crossAxisAlignment: alignment,
-      children: <Widget>[
-        // Add text "xbot" above received messages
-        if (!message.isSentByMe)
-          Text(
-            "xbot",
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+      child: Column(
+        crossAxisAlignment: alignment,
+        children: <Widget>[
+          if (!message.isSentByMe)
+            Text(
+              "Xbot",
+              style: TextStyle(
+                color: Colors.deepPurple,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          if (message.isSentByMe)
+            Text(
+              "me",
+              style: TextStyle(
+                color: Colors.deepPurple,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 4),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+            decoration: BoxDecoration(
+              color: messageColor,
+              borderRadius: borderRadius,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  spreadRadius: 0,
+                  blurRadius: 4,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Text(
+              message.text,
+              style: TextStyle(color: textColor),
             ),
           ),
-
-        // Add text "me" above sent messages
-        if (message.isSentByMe)
-          Text(
-            "me",
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Text(
-            message.text,
-            style: TextStyle(color: textColor),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -305,7 +324,13 @@ class _ChatbotPageState extends State<ChatbotPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chatbot'),
+        title: Text(
+          'X-bot',
+          style: TextStyle(
+            fontWeight: FontWeight.bold, // Makes the text bold
+          ),
+        ),
+        backgroundColor: secondaryColor,
       ),
       body: ColoredBox(
         color: secondaryColor,
