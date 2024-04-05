@@ -23,7 +23,7 @@ Flutter와 Python을 기반으로 하는 프론트엔드와 백엔드 통합 구
 <br/>
 
 # 🎞 Demo
-[CodeClimX 데모 보기](https://github.com/ChoMyeongHwan/CodeClimX/assets/114536581/4df41b6b-f821-4c89-a8c3-e6a14656f379)
+[CodeClimX_데모_보기](https://github.com/ChoMyeongHwan/CodeClimX/assets/114536581/4df41b6b-f821-4c89-a8c3-e6a14656f379)
 
 <br/>
 
@@ -44,7 +44,9 @@ Flutter와 Python을 기반으로 하는 프론트엔드와 백엔드 통합 구
 <br/>
 
 # 🔨 프로젝트 구조
-프로젝트의 전체 구조를 보여주는 다이어그램입니다.
+프로젝트의 전체 구조를 보여주는 아키텍처입니다.
+![Architecture](https://github.com/ChoMyeongHwan/CodeClimX/assets/114536581/15c740e0-8ae6-46d0-ac63-7740241424ad)
+
 
 <br/>
 
